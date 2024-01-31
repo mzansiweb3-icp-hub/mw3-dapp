@@ -1,0 +1,29 @@
+{
+  "canisters": {
+    "mw3_backend": {
+      "main": "src/mw3_backend/main.mo",
+      "type": "motoko"
+    },
+    "mw3_frontend": {
+      "dependencies": [
+        "mw3_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/mw3_frontend/src/index.html"
+      },
+      "source": [
+        "src/mw3_frontend/assets",
+        "dist/mw3_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
