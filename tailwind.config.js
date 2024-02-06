@@ -10,12 +10,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#00040f",
-        secondary: "#00f6ff",
-        dimWhite: "rgba(255, 255, 255, 0.7)",
-        dimBlue: "rgba(9, 151, 124, 0.1)",
+        Teal: "#592C7E",
+        HummingBird: "#d1f1ee",
+        yellow: "#e4d63b",
+        Solitude: "#e9e9ea",
+        gray: "#4B4B4C"
       },
       fontFamily: {
+        Poppins: "Poppins",
         kinfolk: ['Kinfolk', 'sans-serif'],
         cormorant: ['Cormorant', 'sans-serif'],
         tiempos: ['Tiempos', 'sans-serif'],
@@ -24,13 +26,21 @@ module.exports = {
         graphik: ['Graphik', 'sans-serif'],
         roboto: ['var(--font-roboto)'],
       },
+      animation: {
+        slide: "slide 25s linear infinite"
+      },
+      keyframes: {
+        slide: {
+          "0%,100%" : {transform: "translateX(5%)"},
+          "50%": {transform: "translateX(-120%)"}
+        }
+      }
     },
     screens: {
       ts: "360px",
-      xs: "375px",
-      ss: "620px",
-      sm: "770px",
-      md: "900px",
+      xs: "480px",
+      sm: "768px",
+      md: "1060px",
       lg: "1200px",
       xl: "1700px",
     },
