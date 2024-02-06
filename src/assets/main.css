@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'graphik-semi-bold';
+    src: url('../assets/fonts/GraphikSemibold.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'graphik-bold';
+    src: url('../assets/fonts/GraphikBold.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'graphik';
+    src: url('../assets/fonts/Graphik-Regular-Trial.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'graphik-extralight';
+    src: url('../assets/fonts/GraphikExtralight.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
