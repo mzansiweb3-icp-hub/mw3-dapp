@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { navLinks } from "../../../../Data";
 import { HiMenuAlt1, HiX } from "react-icons/hi";
 import MobileNavLinks from "./MobileNavLinks";
 import NavLink from "./NavLink";
 import { motion } from "framer-motion";
+import LoginModal from "./LoginModal";
+import { useAuth } from "../../../../hooks/Context";
+
 const Navbar = () => {
+  const { isAuthenticated, logout } = useAuth();
   const [toggle, setToggle] = useState(false);
   const [active, setActive] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     const scrollActive = () => {
       setActive(window.scrollY > 20);
@@ -14,6 +20,17 @@ const Navbar = () => {
     window.addEventListener("scroll", scrollActive);
     return () => window.removeEventListener("scroll", scrollActive);
   }, [active]);
+
+  const handleOpenLoginModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  useEffect(() => {
+    if (isAuthenticated && isModalOpen) {
+      setIsModalOpen(false);
+    }
+  }, [isAuthenticated]);
+
   return (
     <div
       className={`${
@@ -40,9 +57,24 @@ const Navbar = () => {
               return <NavLink key={navLink.id} {...navLink} />;
             })}
           </div>
-          <button className="py-3 px-6 font-bold text-sm border border-solid rounded-lg border-gray">
-            Sign Up
-          </button>
+          {isAuthenticated ? (
+            <button
+              onClick={logout}
+              className="py-3 px-6 font-bold text-sm border border-solid rounded-lg border-gray"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={handleOpenLoginModal}
+              className="py-3 px-6 font-bold text-sm border border-solid rounded-lg border-gray"
+            >
+              Login
+            </button>
+          )}
+          {isModalOpen && (
+            <LoginModal openModal={isModalOpen} setOpenModal={setIsModalOpen} />
+          )}
           {toggle && (
             <motion.div
               initial={{ x: -500, opacity: 0 }}

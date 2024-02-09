@@ -21,6 +21,8 @@
     "@dfinity/candid": "^0.21.4",
     "@dfinity/identity": "^0.21.4",
     "@dfinity/principal": "^0.21.4",
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "@popperjs/core": "^2.11.8",
     "base-x": "^4.0.0",
     "candb-client-typescript": "^0.0.0-alpha.1",
