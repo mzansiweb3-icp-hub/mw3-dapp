@@ -24,14 +24,14 @@ actor {
     users.put(Principal.fromText(user.principal), user);
   };
 
-  public shared func getUser(id : Principal) : async Result.Result<User, ()> {
+  public shared query func getUser(id : Principal) : async Result.Result<User, ()> {
     return switch (users.get(id)) {
       case (null) { #err() };
       case (?user) { #ok(user) };
     };
   };
 
-  public shared func getUsers() : async [User] {
+  public shared query func getUsers() : async [User] {
     return Iter.toArray(users.vals());
   };
 

@@ -6,8 +6,10 @@ import NavLink from "./NavLink";
 import { motion } from "framer-motion";
 import LoginModal from "./LoginModal";
 import { useAuth } from "../../../../hooks/Context";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuth();
   const [toggle, setToggle] = useState(false);
   const [active, setActive] = useState(null);

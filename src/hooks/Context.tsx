@@ -21,7 +21,7 @@ const localhost = "http://localhost:4943";
 const host = "https://icp0.io";
 
 interface AuthContextType {
-  isAuthenticated: boolean | string;
+  isAuthenticated: boolean | null; 
   backendActor: ActorSubclass<_SERVICE> | null;
   identity: Identity | null;
   login: () => void;
@@ -51,9 +51,7 @@ const defaultOptions: DefaultOptions = {
 };
 
 export const useAuthClient = (options = defaultOptions) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | string>(
-    "loading"
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean| null>(null);
   const [authClient, setAuthClient] = useState<AuthClient | null>(null);
   const [backendActor, setBackendActor] =
     useState<ActorSubclass<_SERVICE> | null>(null);

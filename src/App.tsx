@@ -14,23 +14,16 @@ import Register from "./pages/register/Register";
 
 const App = () => {
   const { isAuthenticated, backendActor, identity } = useAuth();
-  const [user, setUser] = useState<User | null | string >("loading");
-
-  const ProtectedRoutes = () => {
-    if (isAuthenticated === true && user) {
-      return <Outlet />;
-    } else if (isAuthenticated === false && !user) {
-      return <Navigate to="/" />;
-    } else if (isAuthenticated && user === "loading") {
-      return <h3>Loading user</h3>;
-    } else if (isAuthenticated === true && user === "not_found") {
-      return <Register />;
-    }
-  };
+  const [user, setUser] = useState<User | null>(null);
+  const [isRegistered, setIsRegistered] = useState<boolean| null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (isAuthenticated ) {
+    if (isAuthenticated) {
       getUser();
+    } else if (isAuthenticated === false) {
+      setLoading(false);
+      setUser(null);
     }
   }, [isAuthenticated]);
 
@@ -38,27 +31,55 @@ const App = () => {
     if (backendActor && identity) {
       try {
         const user = await backendActor.getUser(identity.getPrincipal());
-        console.log(user, "user")
+        console.log(user, "user");
         if ("ok" in user) {
           setUser(user.ok);
+          setIsRegistered(true);
         } else {
-          setUser("not_found");
+          setIsRegistered(false);
         }
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
     }
   };
 
-  console.log(user, isAuthenticated, "identity", identity, "backendActor", backendActor);
+  console.log(user, isAuthenticated);
 
+  const ProtectedRoutes = () => {
+    if (isAuthenticated && isRegistered ) {
+      return <Outlet />;
+    } else {
+      return <Navigate to="/" />;
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  console.log(
+    "isAuthenticated",
+    isAuthenticated,
+    "loading",
+    loading,
+    "user",
+    user,
+    "isRegistered",
+    isRegistered
+  );
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Landing />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
         </Route>
+        <Route
+          path="/"
+          element={<Landing {...{isRegistered}} /> }
+        />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
