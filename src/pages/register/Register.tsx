@@ -4,19 +4,23 @@ import Form from './Form'
 import { useAuth } from '../../hooks/Context';
 import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
+const Register = ({setIsRegistered, isRegistered}) => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/");
+  
     }
-  }, [isAuthenticated]);
+    if (isAuthenticated && isRegistered) {
+      navigate("/home");
+    }
+  }, [isAuthenticated, isRegistered]);
   return (
     <div className="font-Poppins bg-Solitude">
         <Navbar/>
-        <Form />
+        <Form  {...{setIsRegistered}}/>
         <Footer />
       </div>
   )

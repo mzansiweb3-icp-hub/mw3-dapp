@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "../../declarations/mw3_backend/mw3_backend.did";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
   username: string;
@@ -12,7 +13,8 @@ type FormData = {
   github: string;
 };
 
-const Form = () => {
+const Form = ({setIsRegistered}) => {
+  const navigate = useNavigate();
   const { backendActor, identity } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -53,6 +55,8 @@ const Form = () => {
           position: "top-center",
           hideProgressBar: true,
         });
+        setIsRegistered(true);
+        navigate("/");
         setLoading(false);
       } catch (error) {
         console.log("An error occurred on registering", error);
