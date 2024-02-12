@@ -3,7 +3,7 @@ import { useAuth } from "../../hooks/Context";
 import { set, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "../../declarations/mw3_backend/mw3_backend.did";
+import { Student } from "../../declarations/mw3_backend/mw3_backend.did";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -42,12 +42,13 @@ const Form = ({setIsRegistered}) => {
     setLoading(true);
     if (backendActor) {
       try {
-        let user: User = {
+        let user: Student = {
           username: data.username,
           email: data.email,
           github: data.github,
+          score: BigInt(0),
           principal: identity?.getPrincipal().toString(),
-          level: BigInt(0),
+          submissions: [],
         };
         await backendActor.addUser(user);
         toast.success("You've been registered!", {

@@ -7,7 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useAuth } from "./hooks/Context";
-import { User } from "./declarations/mw3_backend/mw3_backend.did";
+import { Student } from "./declarations/mw3_backend/mw3_backend.did";
 import LoadingScreen from "./components/LoadingScreen";
 const Home = lazy(() => import("./pages/dashboard/home/Home"));
 const Landing = lazy(() => import("./pages/landing/Landing"));
@@ -19,7 +19,7 @@ const Guides = lazy(() => import("./pages/dashboard/guides/Guides"));
 
 const App = () => {
   const { isAuthenticated, backendActor, identity } = useAuth();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Student | null>(null);
   const [isRegistered, setIsRegistered] = useState<boolean | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
