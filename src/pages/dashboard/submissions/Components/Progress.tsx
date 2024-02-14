@@ -3,7 +3,6 @@ import { useAuth } from "../../../../hooks/Context";
 import { Student } from "../../../../declarations/mw3_backend/mw3_backend.did";
 import { IoMdCheckmark } from "react-icons/io";
 import { IoMdSquareOutline } from "react-icons/io";
-import { set } from "zod";
 
 const homeworks = [1, 2, 3, 4, 5, 6];
 

@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 type FormData = {
   username: string;
   email: string;
-  github: string;
+  institution: string;
+  githubLink: string;
 };
 
 const Form = ({setIsRegistered}) => {
@@ -24,12 +25,11 @@ const Form = ({setIsRegistered}) => {
       .min(1, { message: "Username must be 1 or more characters long" })
       .max(50, { message: "Username must be less than 50 characters long" }),
     email: z.string().email({ message: "Invalid email" }),
-    github: z
+    institution: z
       .string()
-      .min(1, { message: "Github username must be 1 or more characters long" })
-      .max(50, {
-        message: "Github username must be less than 50 characters long",
-      }),
+      .min(1, { message: "Institution must be 1 or more characters long" })
+      .max(100, { message: "Institution must be less than 100 characters long" }),
+    githubLink : z.string().url({message: "Invalid URL"})
   });
 
   const {
@@ -39,16 +39,19 @@ const Form = ({setIsRegistered}) => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const handleSave = async (data: FormData) => {
+  
     setLoading(true);
     if (backendActor) {
       try {
         let user: Student = {
           username: data.username,
           email: data.email,
-          github: data.github,
+          github: data.githubLink,
           score: BigInt(0),
+          institution: data.institution,
           principal: identity?.getPrincipal().toString(),
           submissions: [],
+          created: BigInt(Date.now()),
         };
         await backendActor.addUser(user);
         toast.success("You've been registered!", {
@@ -105,22 +108,45 @@ const Form = ({setIsRegistered}) => {
             <span className="text-red-600">{errors.email.message}</span>
           )}
         </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="institution"
+          >
+            <span>Institution/Organization</span>
+            <span>
+              <p className="text-xs text-gray-400">
+                (If you're an independent developer, please type "Independent")
+              </p>
+            </span>
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="institution"
+            type="text"
+            {...register("institution")}
+            placeholder="Institution"
+          />
+          {errors.institution && (
+            <span className="text-red-600">{errors.institution.message}</span>
+          )}
+        </div>
         <div className="mb-6">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="github"
           >
-            Github Username
+            Github Profile Link
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="github"
             type="text"
-            {...register("github")}
-            placeholder="Github Username"
+            {...register("githubLink")}
+            placeholder="Github profile link"
           />
-          {errors.github && (
-            <span className="text-red-600">{errors.github.message}</span>
+          {errors.githubLink && (
+            <span className="text-red-600">{errors.githubLink.message}</span>
           )}
         </div>
         <div className="flex items-center justify-between">

@@ -7,9 +7,11 @@ module {
         principal : Text;
         username : Text;
         email : Text;
+        institution : Text;
         github : Text;
         score : Nat;
         submissions : [Homework];
+        created: Int;
     };
 
     public type Homework = {
