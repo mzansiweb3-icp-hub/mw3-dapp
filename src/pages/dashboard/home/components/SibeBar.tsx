@@ -75,10 +75,10 @@ const Sidebar = () => {
                         className={`font-normal text-[16px] mb-4`}
                         onClick={() => {
                           setShowMenu(false);
-                          navigate("/submit");
+                          navigate("/submissions");
                         }}
                       >
-                        Submit
+                        Submissions
                       </button>
                     </li>
                     <li>
@@ -184,11 +184,11 @@ const Sidebar = () => {
               </li>
               <li className="items-center">
                 <Link
-                  to="/submit"
-                  onClick={() => setTab("submit")}
+                  to="/submissions"
+                  onClick={() => setTab("submissions")}
                   className={`
                     text-xs uppercase py-3 font-bold  flex items-center gap-2 px-3  ${
-                      tab === "submit"
+                      tab === "submissions"
                         ? "text-cyan-500 rounded-xl bg-white hover:text-lightBlue-600"
                         : "text-blueGray-700 hover:text-blueGray-500"
                     }
@@ -199,11 +199,11 @@ const Sidebar = () => {
                     size={20}
                     className={`
                       fas fa-tv mr-2 text-sm ${
-                        tab === "submit" ? "opacity-75" : "text-blueGray-300"
+                        tab === "submissions" ? "opacity-75" : "text-blueGray-300"
                       }
                     `}
                   />
-                  <span>Submit</span>
+                  <span>Submissions</span>
                 </Link>
               </li>
               <li className="items-center">

@@ -24,6 +24,8 @@ interface AuthContextType {
   isAuthenticated: boolean | null; 
   backendActor: ActorSubclass<_SERVICE> | null;
   identity: Identity | null;
+  submitted: boolean;
+  setSubmitted: (value: boolean) => void;
   login: () => void;
   nfidlogin: () => void;
   logout: () => void;
@@ -56,6 +58,7 @@ export const useAuthClient = (options = defaultOptions) => {
   const [backendActor, setBackendActor] =
     useState<ActorSubclass<_SERVICE> | null>(null);
   const [identity, setIdentity] = useState<Identity | null>(null);
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
   useEffect(() => {
     AuthClient.create(options.createOptions).then(async (client) => {
@@ -159,7 +162,9 @@ export const useAuthClient = (options = defaultOptions) => {
     login,
     logout,
     nfidlogin,
-    identity
+    identity,
+    submitted,
+    setSubmitted,
   };
 };
 

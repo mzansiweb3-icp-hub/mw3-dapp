@@ -26,12 +26,16 @@ actor MotoCoin {
         return total;
     };
 
+    public query func balanceOf(account : Account) : async Nat {
+        return Option.get(ledger.get(account), 0);
+    };
+
     public shared ({ caller }) func transfer(
         from : Account,
         to : Account, 
         amount : Nat
         ) : async Result.Result<(), Text> {
-            if(not Account.accountBelongToPrincipal(from, caller)) {
+            if(not Account.accountBelongsToPrincipal(from, caller)) {
                 return #err("This account does not belong to you");
             };
             switch(ledger.get(from)){

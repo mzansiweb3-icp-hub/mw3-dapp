@@ -13,7 +13,7 @@ const Home = lazy(() => import("./pages/dashboard/home/Home"));
 const Landing = lazy(() => import("./pages/landing/Landing"));
 const Register = lazy(() => import("./pages/register/Register"));
 const Layout = lazy(() => import("./pages/dashboard/home/components/Layout"));
-const Submit = lazy(() => import("./pages/dashboard/submit/Submit"));
+const Submissions = lazy(() => import("./pages/dashboard/submissions/Submissions"));
 const Profile = lazy(() => import("./pages/dashboard/profile/Profile"));
 const Guides = lazy(() => import("./pages/dashboard/guides/Guides"));
 
@@ -70,7 +70,7 @@ const App = () => {
           <Route element={<ProtectedRoutes />}>
             <Route element={<Layout />}>
               <Route path="/home" element={<Home />} />
-              <Route path="/submit" element={<Submit />} />
+              <Route path="/submissions" element={<Submissions />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/guides" element={<Guides />} />
             </Route>

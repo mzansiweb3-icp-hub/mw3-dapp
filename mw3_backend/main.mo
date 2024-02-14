@@ -37,6 +37,13 @@ actor {
     };
   };
 
+  public shared query ({ caller }) func getMyProfile() : async Result.Result<Student, ()> {
+    return switch (students.get(caller)) {
+      case (null) { #err() };
+      case (?user) { #ok(user) };
+    };
+  };
+
   public shared query func getUsers() : async [Student] {
     return Iter.toArray(students.vals());
   };

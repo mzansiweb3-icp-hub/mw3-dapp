@@ -14,7 +14,6 @@ module.exports = {
         HummingBird: "#d1f1ee",
         yellow: "#e4d63b",
         Solitude: "#e9e9ea",
-        gray: "#4B4B4C"
       },
       fontFamily: {
         Poppins: "Poppins",

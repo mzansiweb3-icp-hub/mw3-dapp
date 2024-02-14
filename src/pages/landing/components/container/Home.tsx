@@ -55,7 +55,7 @@ const Home = () => {
             20+ leading universities and companies
           </span>
         </p>
-        <motion.div
+        {/* <motion.div
           variants={container}
           initial="hidden"
           whileInView="visible"
@@ -66,7 +66,7 @@ const Home = () => {
               <img src={logo} alt="" className="w-full object-cover" />
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   );

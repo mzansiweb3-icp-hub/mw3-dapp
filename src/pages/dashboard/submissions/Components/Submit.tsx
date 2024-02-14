@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../hooks/Context";
-import { verifyHomework1 } from "./utils/verify";
-import { set } from "zod";
-import { VerifyProject } from "../../../declarations/mw3_backend/mw3_backend.did";
-import { processError } from "./utils/process";
+import { useAuth } from "../../../../hooks/Context";
+import { processError } from "../utils/process";
 
 const Submit = () => {
   const navigate = useNavigate();
-  const { backendActor, identity } = useAuth();
+  const { backendActor, setSubmitted } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [canisterId, setCanisterId] = useState<string>("");
   const [homework, setHomework] = useState<string>("1");
@@ -24,7 +21,8 @@ const Submit = () => {
           BigInt(homework)
         );
         if ("ok" in result) {
-          toast.success("Project verified!", {
+          setSubmitted(true);
+          toast.success(`Homework ${homework} verification successfull`, {
             autoClose: 5000,
             position: "top-center",
             hideProgressBar: true,
@@ -41,15 +39,14 @@ const Submit = () => {
     }
   };
 
+  console.log("Error", error);
+
   return (
     <div className="flex justify-center items-center">
-      <div className="w-1/3">
+      <div className="w-full px-10">
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-            <strong className="font-bold">Error!</strong>
-            <span className="block sm:inline">
-              {error}
-            </span>
+            <span className="block sm:inline">{error}</span>
           </div>
         )}
         <div className="mb-4">
