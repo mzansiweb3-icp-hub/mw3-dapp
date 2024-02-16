@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { IoCardOutline } from "react-icons/io5";
@@ -9,9 +9,11 @@ import { CiHome } from "react-icons/ci";
 import { TiThMenu } from "react-icons/ti";
 import { AiOutlineClose } from "react-icons/ai";
 import NotificationDropdown from "./NotificationDropdown";
-import { Logo } from "../../../../assets";
+import { Logo } from "../assets";
+import { useAuth } from "../hooks/Context";
 
 const Sidebar = () => {
+  const { isAdmin } = useAuth();
   const [tab, setTab] = useState<string>("");
   const [collapseShow, setCollapseShow] = useState("hidden");
   const [showMenu, setShowMenu] = useState(false);
@@ -103,6 +105,19 @@ const Sidebar = () => {
                         Guides
                       </button>
                     </li>
+                    {isAdmin && (
+                      <li>
+                        <button
+                          className={`font-normal text-[16px] mb-4`}
+                          onClick={() => {
+                            setShowMenu(false);
+                            navigate("/admin");
+                          }}
+                        >
+                          Admin
+                        </button>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
@@ -199,7 +214,9 @@ const Sidebar = () => {
                     size={20}
                     className={`
                       fas fa-tv mr-2 text-sm ${
-                        tab === "submissions" ? "opacity-75" : "text-blueGray-300"
+                        tab === "submissions"
+                          ? "opacity-75"
+                          : "text-blueGray-300"
                       }
                     `}
                   />
@@ -255,6 +272,27 @@ const Sidebar = () => {
               />
               <span>Guides</span>
             </Link>
+            {isAdmin &&  <Link
+              to="/admin"
+              onClick={() => setTab("admin")}
+              className={`
+                  text-xs uppercase py-3 font-bold  w-full flex items-center gap-2 px-3  ${
+                    tab === "admin"
+                      ? "text-cyan-500 rounded-xl bg-white hover:text-lightBlue-600"
+                      : "text-blueGray-700 hover:text-blueGray-500"
+                  }
+        
+                  `}
+            >
+              <IoDocumentsOutline
+                size={20}
+                className={`${
+                  tab === "admin" ? "opacity-75" : "text-blueGray-300"
+                }
+                `}
+              />
+              <span>Admin</span>
+            </Link>}
           </div>
         </div>
       </nav>

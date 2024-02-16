@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../../hooks/Context";
+import { useAuth } from "../hooks/Context";
 import LoginMenu from "./LoginMenu";
 
 const Navbar = () => {

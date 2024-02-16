@@ -7,19 +7,22 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useAuth } from "./hooks/Context";
-import { Student } from "./declarations/mw3_backend/mw3_backend.did";
 import LoadingScreen from "./components/LoadingScreen";
+import Admin from "./pages/admin/Admin";
+import NotFound from "./components/NotFound";
 const Home = lazy(() => import("./pages/dashboard/home/Home"));
 const Landing = lazy(() => import("./pages/landing/Landing"));
 const Register = lazy(() => import("./pages/register/Register"));
-const Layout = lazy(() => import("./pages/dashboard/home/components/Layout"));
-const Submissions = lazy(() => import("./pages/dashboard/submissions/Submissions"));
+const Layout = lazy(() => import("./components/Layout"));
+const Submissions = lazy(
+  () => import("./pages/dashboard/submissions/Submissions")
+);
 const Profile = lazy(() => import("./pages/dashboard/profile/Profile"));
 const Guides = lazy(() => import("./pages/dashboard/guides/Guides"));
 
 const App = () => {
-  const { isAuthenticated, backendActor, identity } = useAuth();
-  const [user, setUser] = useState<Student | null>(null);
+  const { isAuthenticated, backendActor, identity, setUser, setIsAdmin } =
+    useAuth();
   const [isRegistered, setIsRegistered] = useState<boolean | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -36,7 +39,8 @@ const App = () => {
     if (backendActor && identity) {
       try {
         const user = await backendActor.getUser(identity.getPrincipal());
-        console.log(user, "user");
+        const admin = await backendActor.isAdmin();
+        setIsAdmin(admin);
         if ("ok" in user) {
           setUser(user.ok);
           setIsRegistered(true);
@@ -49,8 +53,6 @@ const App = () => {
       }
     }
   };
-
-  console.log(user, isAuthenticated);
 
   const ProtectedRoutes = () => {
     if (isAuthenticated && isRegistered) {
@@ -73,10 +75,15 @@ const App = () => {
               <Route path="/submissions" element={<Submissions />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/guides" element={<Guides />} />
+              <Route path="/admin" element={<Admin />} />
             </Route>
           </Route>
           <Route path="/" element={<Landing {...{ isRegistered }} />} />
-          <Route path="/register" element={<Register {...{setIsRegistered, isRegistered}} />} />
+          <Route
+            path="/register"
+            element={<Register {...{ setIsRegistered, isRegistered }} />}
+          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

@@ -11,7 +11,7 @@ module {
         github : Text;
         score : Nat;
         submissions : [Homework];
-        created: Int;
+        created : Int;
     };
 
     public type Homework = {
@@ -22,4 +22,16 @@ module {
 
     public type TestResult = Test.TestResult;
     public type VerifyProject = TestResult or Result.Result<(), { #NotAController : Text; #NotAStudent : Text; #InvalidDay : Text; #AlreadyCompleted : Text }>;
+
+    public type Role = {
+        #owner;
+        #admin;
+        #unauthorized;
+    };
+
+    public type Permission = {
+        #assign_role;
+        #lowest;
+    };
+
 };

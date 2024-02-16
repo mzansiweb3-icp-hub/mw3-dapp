@@ -13,7 +13,7 @@ import {
 import { canisterId as iiCanId } from "../declarations/internet_identity";
 import { getAuthClient } from "./nfid";
 import { Actor, ActorSubclass, HttpAgent, Identity } from "@dfinity/agent";
-import { _SERVICE } from "../declarations/mw3_backend/mw3_backend.did";
+import { Student, _SERVICE } from "../declarations/mw3_backend/mw3_backend.did";
 import { canisterId, idlFactory } from "../declarations/mw3_backend";
 
 const network = process.env.DFX_NETWORK || "local";
@@ -21,10 +21,14 @@ const localhost = "http://localhost:4943";
 const host = "https://icp0.io";
 
 interface AuthContextType {
-  isAuthenticated: boolean | null; 
+  isAuthenticated: boolean | null;
   backendActor: ActorSubclass<_SERVICE> | null;
   identity: Identity | null;
   submitted: boolean;
+  user: Student | null;
+  isAdmin: boolean;
+  setIsAdmin: (value: boolean) => void;
+  setUser: (value: Student | null) => void;
   setSubmitted: (value: boolean) => void;
   login: () => void;
   nfidlogin: () => void;
@@ -53,12 +57,14 @@ const defaultOptions: DefaultOptions = {
 };
 
 export const useAuthClient = (options = defaultOptions) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean| null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [authClient, setAuthClient] = useState<AuthClient | null>(null);
   const [backendActor, setBackendActor] =
     useState<ActorSubclass<_SERVICE> | null>(null);
   const [identity, setIdentity] = useState<Identity | null>(null);
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [user, setUser] = useState<Student | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean| null>(null);
 
   useEffect(() => {
     AuthClient.create(options.createOptions).then(async (client) => {
@@ -132,6 +138,7 @@ export const useAuthClient = (options = defaultOptions) => {
     const _identity = client.getIdentity();
     setIdentity(_identity);
 
+    console.log("Principal", _identity.getPrincipal().toString());
     let agent = new HttpAgent({
       host: network === "local" ? localhost : host,
       identity: _identity,
@@ -151,6 +158,8 @@ export const useAuthClient = (options = defaultOptions) => {
     setBackendActor(_backendActor);
   }
 
+  
+
   async function logout() {
     await authClient?.logout();
     await updateClient(authClient);
@@ -165,6 +174,10 @@ export const useAuthClient = (options = defaultOptions) => {
     identity,
     submitted,
     setSubmitted,
+    user,
+    setUser,
+    isAdmin,
+    setIsAdmin,
   };
 };
 

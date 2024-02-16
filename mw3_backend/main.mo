@@ -5,14 +5,24 @@ import Iter "mo:base/Iter";
 import Result "mo:base/Result";
 import Time "mo:base/Time";
 import Array "mo:base/Array";
+import Error "mo:base/Error";
+import AssocList "mo:base/AssocList";
+import List "mo:base/List";
+import Debug "mo:base/Debug";
 import Test "test";
 import Utils "utils";
 
-actor {
+
+shared ({ caller = initializer }) actor class MW3() = this {
 
   type Student = Types.Student;
   type VerifyProject = Types.VerifyProject;
   type Homework = Types.Homework;
+  type Role = Types.Role;
+  type Permission = Types.Permission;
+
+  private stable var roles : AssocList.AssocList<Principal, Role> = List.nil();
+  private stable var role_requests : AssocList.AssocList<Principal, Role> = List.nil();
 
   var students = TrieMap.TrieMap<Principal, Student>(Principal.equal, Principal.hash);
   private stable var studentsEntries : [(Principal, Student)] = [];
@@ -151,6 +161,80 @@ actor {
         return false;
       };
     };
+  };
+
+  /********************************
+    *  ACCESS CONTROL IMPL
+    *********************************/
+
+  // Determine if a principal has a role with permissions
+  func has_permission(pal : Principal, perm : Permission) : Bool {
+    let role = get_role(pal);
+    switch (role, perm) {
+      case (? #owner or ? #admin, _) true;
+      case (_, _) false;
+    };
+  };
+
+  func principal_eq(a : Principal, b : Principal) : Bool {
+    return a == b;
+  };
+
+  func get_role(pal : Principal) : ?Role {
+    if (pal == initializer) {
+      ? #owner;
+    } else {
+      AssocList.find<Principal, Role>(roles, pal, principal_eq);
+    };
+  };
+
+  // Reject unauthorized user identities
+  func require_permission(pal : Principal, perm : Permission) : async () {
+    if (has_permission(pal, perm) == false) {
+      throw Error.reject("unauthorized");
+    };
+  };
+
+
+  func isAuthorized(pal : Principal) : Bool {
+    let role = get_role(pal);
+    switch (role) {
+      case (? #owner or ? #admin) true;
+      case (_) false;
+    };
+  };
+
+  func _isAdmin(pal : Principal) : Bool {
+    let role = get_role(pal);
+    switch (role) {
+      case (? #owner or ? #admin) true;
+      case (_) false;
+    };
+  };
+
+  public shared query ({caller}) func isAdmin () : async Bool {
+    return _isAdmin(caller);
+  }; 
+
+ public shared ({ caller }) func getAllAdmins() : async [(Principal, Role)] {
+        List.toArray(roles);
+    };
+
+  // Assign a new role to a principal
+  public shared ({ caller }) func assign_role(assignee : Principal, new_role : ?Role) : async () {
+    await require_permission(caller, #assign_role);
+
+    switch new_role {
+      case (? #owner) {
+        throw Error.reject("Cannot assign anyone to be the owner");
+      };
+      case (_) {};
+    };
+    if (assignee == initializer) {
+      throw Error.reject("Cannot assign a role to the canister owner");
+    };
+    roles := AssocList.replace<Principal, Role>(roles, assignee, principal_eq, new_role).0;
+    role_requests := AssocList.replace<Principal, Role>(role_requests, assignee, principal_eq, null).0;
   };
 
 };

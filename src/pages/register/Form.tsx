@@ -71,7 +71,7 @@ const Form = ({setIsRegistered}) => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <form className="w-1/3" onSubmit={handleSubmit(handleSave)}>
+      <form className="md:w-1/3 px-5 md:px-0" onSubmit={handleSubmit(handleSave)}>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -143,7 +143,7 @@ const Form = ({setIsRegistered}) => {
             id="github"
             type="text"
             {...register("githubLink")}
-            placeholder="Github profile link"
+            placeholder="e.g - https://github.com/username"
           />
           {errors.githubLink && (
             <span className="text-red-600">{errors.githubLink.message}</span>
