@@ -14,7 +14,7 @@ const Register = ({setIsRegistered, isRegistered}) => {
   
     }
     if (isAuthenticated && isRegistered) {
-      navigate("/home");
+      navigate("/submissions");
     }
   }, [isAuthenticated, isRegistered]);
   return (

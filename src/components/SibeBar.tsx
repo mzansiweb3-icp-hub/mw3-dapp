@@ -35,7 +35,7 @@ const Sidebar = () => {
           <div className="flex justify-between items-center w-full md:flex-none">
             <Link
               className="md:block text-4xl md:pb-2 text-white mr-0  font-bold p-4 px-0"
-              to="/home"
+              to="/submissions"
             >
               <div className="flex justify-center gap-2">
                 <img src={Logo} alt="logo" className="w-10 h-10" />
@@ -61,7 +61,7 @@ const Sidebar = () => {
                     <AiOutlineClose />
                   </button>
                   <ul className="list-none flex-1 items-center flex-col justify-end ">
-                    <li>
+                    {/* <li>
                       <button
                         className={`font-normal text-[16px] mb-4`}
                         onClick={() => {
@@ -71,7 +71,7 @@ const Sidebar = () => {
                       >
                         Home
                       </button>
-                    </li>
+                    </li> */}
                     <li>
                       <button
                         className={`font-normal text-[16px] mb-4`}
@@ -142,7 +142,7 @@ const Sidebar = () => {
                 <div className="w-6/12">
                   <Link
                     className="md:block text-left text-4xl md:pb-2 text-white mr-0 inline-block whitespace-nowrap font-bold p-4 px-0"
-                    to="/home"
+                    to="/submissions"
                   >
                     <img src={Logo} alt="logo" className="w-10 h-10" />
                   </Link>
@@ -173,7 +173,7 @@ const Sidebar = () => {
             <hr className="my-4 md:min-w-full" />
 
             <ul className="md:flex-col md:min-w-full flex gap-[20px] flex-col list-none">
-              <li className="items-center">
+              {/* <li className="items-center">
                 <Link
                   to="/home"
                   onClick={() => setTab("home")}
@@ -196,7 +196,7 @@ const Sidebar = () => {
                   />
                   <span>Home</span>
                 </Link>
-              </li>
+              </li> */}
               <li className="items-center">
                 <Link
                   to="/submissions"

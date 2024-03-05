@@ -16,7 +16,7 @@ const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
     if (isRegistered === true) {
-      navigate("/home");
+      navigate("/submissions");
     }
     if (isAuthenticated === true && isRegistered === false) {
       navigate("/register");
