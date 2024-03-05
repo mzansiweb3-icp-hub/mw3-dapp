@@ -1,5 +1,5 @@
 import React from "react";
-import { accordions, teacher1, teacher2 } from "../../../../Data";
+import { accordions, confidence, enoch } from "../../../../Data";
 import Accordion from "./Accordion";
 const Teacher = () => {
   return (
@@ -17,7 +17,7 @@ const Teacher = () => {
           </button>
         </div>
         <div className="p-4 md:w-3/4 sm:row-start-1">
-          <img src={teacher1} alt="" />
+          <img src={enoch} alt="enoch chirima" />
         </div>
         <div className="pl-5">
           <div className="font-bold sm:text-[1.875rem] text-[1.5rem] mb-5">
@@ -31,7 +31,7 @@ const Teacher = () => {
           </button>
         </div>
         <div className="p-4 md:w-3/4">
-          <img src={teacher2} alt="" />
+          <img src={confidence} alt="confidence nyirenda" />
         </div>
       </div>
       <div className="text-center my-8 font-bold sm:text-[1.875rem] text-[1.5rem]">

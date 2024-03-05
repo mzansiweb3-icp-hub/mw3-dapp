@@ -1,5 +1,5 @@
 import React from "react";
-import hero from "../../../../assets/images/hero.png";
+import hero from "../../../../assets/images/hero.jpg";
 import { logos } from "../../../../Data";
 import { motion } from "framer-motion";
 const Home = () => {

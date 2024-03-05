@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Logo  from "../../../../assets/images/mw3logo.png";
 import { navLinks } from "../../../../Data";
 import { HiMenuAlt1, HiX } from "react-icons/hi";
 import MobileNavLinks from "./MobileNavLinks";
@@ -51,7 +52,7 @@ const Navbar = () => {
               onClick={() => setToggle(true)}
             />
             <div className="text-xl text-Teal uppercase tracking-wide font-bold">
-              MW3 Hub
+              <img src={Logo} alt="" className="h-8" />
             </div>
           </div>
           <div className="sm:flex items-center hidden">
