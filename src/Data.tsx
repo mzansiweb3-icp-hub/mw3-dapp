@@ -12,10 +12,10 @@ import courses6 from "./assets/images/courses6.jpg";
 import courses7 from "./assets/images/courses7.jpg";
 import courses8 from "./assets/images/courses8.jpg";
 
-import teacher1 from "./assets/images/teacher1.png";
-import teacher2 from "./assets/images/teacher2.png";
-import about from "./assets/images/About.jpg";
-export {teacher1, teacher2, about};
+import confidence from "./assets/images/confidence.jpg";
+import enoch from "./assets/images/enoch.jpg";
+import students from "./assets/images/students.jpg";
+export {confidence, enoch, students};
 
 import logo1 from "./assets/images/logo1.png";
 import logo2 from "./assets/images/logo2.png";
@@ -79,11 +79,11 @@ export const courses = [
   {
     id: 1,
     image: courses1,
-    category: "Web Design",
+    category: "Web3 Development",
     title: "The Complete Web Design Course",
     rating: 4.9,
     participants: 500,
-    price: 105,
+    price: 0,
   },
   {
     id: 2,
@@ -92,7 +92,7 @@ export const courses = [
     title: "FullStack Web Development Course",
     rating: 4.8,
     participants: 700,
-    price: 125,
+    price: 0,
   },
   {
     id: 3,
@@ -101,7 +101,7 @@ export const courses = [
     title: "Python Beginner to Advanced Course",
     rating: 4.9,
     participants: 300,
-    price: 99,
+    price: 0,
   },
   {
     id: 4,
@@ -110,7 +110,7 @@ export const courses = [
     title: "UI/UX Design Crazy Course With Harrys",
     rating: 4.7,
     participants: 600,
-    price: 85,
+    price: 0,
   },
   {
     id: 5,
@@ -119,7 +119,7 @@ export const courses = [
     title: "AI Development With Python (complete beginner course)",
     rating: 4.9,
     participants: 500,
-    price: 105,
+    price: 0,
   },
   {
     id: 6,
@@ -128,7 +128,7 @@ export const courses = [
     title: "The Complete Web Design Course",
     rating: 4.9,
     participants: 500,
-    price: 105,
+    price: 0,
   },
   {
     id: 7,
@@ -137,7 +137,7 @@ export const courses = [
     title: "The Complete Web Design Course",
     rating: 4.9,
     participants: 500,
-    price: 105,
+    price: 0,
   },
   {
     id: 8,
@@ -146,7 +146,7 @@ export const courses = [
     title: "The Complete Web Design Course",
     rating: 4.9,
     participants: 500,
-    price: 105,
+    price: 0,
   },
 ];
 
