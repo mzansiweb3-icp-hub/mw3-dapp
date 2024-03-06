@@ -10,7 +10,7 @@ const Teacher = () => {
             Meet <span className="text-Teal">Enoch</span> <br /> Our Instructor
           </div>
           <p className="text-sm leading-7 text-gray mb-5">
-            Meet Enoch, our lead blockchain instructor. With over a decade of experience in developing blockchain solutions, Confidence has a passion for teaching and a knack for simplifying complex concepts. From smart contracts to decentralized applications, he brings real-world expertise and a hands-on approach to learning. Enoch is dedicated to empowering students with the skills to excel in the blockchain space
+            Meet Enoch, our lead blockchain instructor. With a passion for teaching and a knack for simplifying complex concepts. From smart contracts to decentralized applications, he brings real-world expertise and a hands-on approach to learning. Enoch is dedicated to empowering students with the skills to excel in the blockchain space
           </p>
           <button className="py-3 px-4 bg-Teal text-white rounded-lg text-sm font-bold ">
             Connect
