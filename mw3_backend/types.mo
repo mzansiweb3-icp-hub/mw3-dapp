@@ -5,7 +5,8 @@ module {
 
     public type Student = {
         principal : Text;
-        username : Text;
+        firstName : Text;
+        lastName : Text;
         email : Text;
         institution : Text;
         github : Text;

@@ -10,10 +10,10 @@ import { useAuth } from "./hooks/Context";
 import LoadingScreen from "./components/LoadingScreen";
 import Admin from "./pages/admin/Admin";
 import NotFound from "./components/NotFound";
+import Layout from "./components/Layout";
 const Home = lazy(() => import("./pages/dashboard/home/Home"));
 const Landing = lazy(() => import("./pages/landing/Landing"));
 const Register = lazy(() => import("./pages/register/Register"));
-const Layout = lazy(() => import("./components/Layout"));
 const Submissions = lazy(
   () => import("./pages/dashboard/submissions/Submissions")
 );

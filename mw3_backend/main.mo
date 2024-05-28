@@ -12,7 +12,6 @@ import Debug "mo:base/Debug";
 import Test "test";
 import Utils "utils";
 
-
 shared ({ caller = initializer }) actor class MW3() = this {
 
   type Student = Types.Student;
@@ -40,7 +39,8 @@ shared ({ caller = initializer }) actor class MW3() = this {
     students.put(Principal.fromText(user.principal), user);
   };
 
-  public shared query func getUser(id : Principal) : async Result.Result<Student, ()> {
+  public shared query ({ caller }) func getUser(id : Principal) : async Result.Result<Student, ()> {
+    assert (_isAdmin(caller));
     return switch (students.get(id)) {
       case (null) { #err() };
       case (?user) { #ok(user) };
@@ -54,15 +54,18 @@ shared ({ caller = initializer }) actor class MW3() = this {
     };
   };
 
-  public shared query func getUsers() : async [Student] {
+  public shared query ({ caller }) func getUsers() : async [Student] {
+    assert (_isAdmin(caller));
     return Iter.toArray(students.vals());
   };
 
-  public shared func removeUser(id : Principal) : async () {
+  public shared ({ caller }) func removeUser(id : Principal) : async () {
+    assert (_isAdmin(caller));
     students.delete(id);
   };
 
-  public shared func updateUser(user : Student) : async () {
+  public shared ({ caller }) func updateUser(user : Student) : async () {
+    assert (caller == Principal.fromText(user.principal) or _isAdmin(caller));
     students.put(Principal.fromText(user.principal), user);
   };
 
@@ -195,7 +198,6 @@ shared ({ caller = initializer }) actor class MW3() = this {
     };
   };
 
-
   func isAuthorized(pal : Principal) : Bool {
     let role = get_role(pal);
     switch (role) {
@@ -212,13 +214,13 @@ shared ({ caller = initializer }) actor class MW3() = this {
     };
   };
 
-  public shared query ({caller}) func isAdmin () : async Bool {
+  public shared query ({ caller }) func isAdmin() : async Bool {
     return _isAdmin(caller);
-  }; 
+  };
 
- public shared ({ caller }) func getAllAdmins() : async [(Principal, Role)] {
-        List.toArray(roles);
-    };
+  public shared ({ caller }) func getAllAdmins() : async [(Principal, Role)] {
+    List.toArray(roles);
+  };
 
   // Assign a new role to a principal
   public shared ({ caller }) func assign_role(assignee : Principal, new_role : ?Role) : async () {

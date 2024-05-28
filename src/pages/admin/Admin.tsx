@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/Context";
 import { Student } from "../../declarations/mw3_backend/mw3_backend.did";
 import { formatDate } from "../../utils/time";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import Tippy from "@tippyjs/react";
 
 const Admin = () => {
   const { backendActor } = useAuth();
   const [students, setStudents] = useState<Student[] | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     getStudents();
@@ -26,7 +29,7 @@ const Admin = () => {
       return text;
     }
   }
-  
+
   return (
     <section className="container mx-auto px-3  font-mono">
       <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
@@ -55,7 +58,19 @@ const Admin = () => {
                     </div>
                   </td>
                   <td className="px-4 py-3 text-ms border">
-                    {truncateText(student.email)}
+                  <Tippy
+                        hideOnClick={false}
+                        content={
+                          copied ? <span>copied</span> : <span>copy</span>
+                        }
+                      >
+                    <CopyToClipboard
+                      text={student.email}
+                      onCopy={() => setCopied(true)}
+                    >
+                    <span> {truncateText(student.email)}</span> 
+                    </CopyToClipboard>
+                    </Tippy>
                   </td>
                   <td className="px-4 py-3 text-xs border">
                     <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
