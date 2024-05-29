@@ -38,7 +38,7 @@ const App = () => {
   const getUser = async () => {
     if (backendActor && identity) {
       try {
-        const user = await backendActor.getUser(identity.getPrincipal());
+        const user = await backendActor.getMyProfile();
         const admin = await backendActor.isAdmin();
         setIsAdmin(admin);
         if ("ok" in user) {

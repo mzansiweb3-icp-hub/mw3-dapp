@@ -8,28 +8,35 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 type FormData = {
-  username: string;
+  firstName: string;
+  lastName: string;
   email: string;
   institution: string;
   githubLink: string;
 };
 
-const Form = ({setIsRegistered}) => {
+const Form = ({ setIsRegistered }) => {
   const navigate = useNavigate();
   const { backendActor, identity } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
 
   const schema = z.object({
-    username: z
+    firstName: z
       .string()
-      .min(1, { message: "Username must be 1 or more characters long" })
-      .max(50, { message: "Username must be less than 50 characters long" }),
+      .min(1, { message: "First name must be 1 or more characters long" })
+      .max(50, { message: "First name must be less than 50 characters long" }),
+    lastName: z
+      .string()
+      .min(1, { message: "Last name must be 1 or more characters long" })
+      .max(50, { message: "Last name must be less than 50 characters long" }),
     email: z.string().email({ message: "Invalid email" }),
     institution: z
       .string()
       .min(1, { message: "Institution must be 1 or more characters long" })
-      .max(100, { message: "Institution must be less than 100 characters long" }),
-    githubLink : z.string().url({message: "Invalid URL"})
+      .max(100, {
+        message: "Institution must be less than 100 characters long",
+      }),
+    githubLink: z.string().url({ message: "Invalid URL" }),
   });
 
   const {
@@ -39,12 +46,12 @@ const Form = ({setIsRegistered}) => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const handleSave = async (data: FormData) => {
-  
     setLoading(true);
     if (backendActor) {
       try {
         let user: Student = {
-          username: data.username,
+          firstName: data.firstName,
+          lastName: data.lastName,
           email: data.email,
           github: data.githubLink,
           score: BigInt(0),
@@ -71,23 +78,44 @@ const Form = ({setIsRegistered}) => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <form className="md:w-1/3 px-5 md:px-0" onSubmit={handleSubmit(handleSave)}>
+      <form
+        className="md:w-1/3 px-5 md:px-0"
+        onSubmit={handleSubmit(handleSave)}
+      >
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username"
+            htmlFor="firstName"
           >
-            Username
+            First Name
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="username"
+            id="firstName"
             type="text"
-            {...register("username")}
-            placeholder="Username"
+            {...register("firstName")}
+            placeholder="firstName"
           />
-          {errors.username && (
-            <span className="text-red-600">{errors.username.message}</span>
+          {errors.firstName && (
+            <span className="text-red-600">{errors.firstName.message}</span>
+          )}
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="lastName"
+          >
+            Last Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="lastName"
+            type="text"
+            {...register("lastName")}
+            placeholder="lastName"
+          />
+          {errors.lastName && (
+            <span className="text-red-600">{errors.lastName.message}</span>
           )}
         </div>
         <div className="mb-4">

@@ -18,7 +18,6 @@ const Admin = () => {
     try {
       let students = await backendActor.getUsers();
       setStudents(students);
-      console.log(students);
     } catch (error) {}
   };
 
@@ -30,8 +29,48 @@ const Admin = () => {
     }
   }
 
+  const handleBackupUsers = async () => {
+    const users = await backendActor.getUsers();
+
+    const usersWithBigIntAsString = users.map((user: Student) => {
+      const _homeworks = user.submissions.map((homework) => {
+        return {
+          ...homework,
+          number: homework.number.toString(),
+          timestamp: homework.timestamp.toString(),
+        };
+      });
+      return {
+        ...user,
+        created: user.created.toString(),
+        score: user.score.toString(),
+        submissions: _homeworks,
+      };
+    });
+
+    console.log(usersWithBigIntAsString)
+
+    const dataStr =
+      "data:text/json;charset=utf-8," +
+      encodeURIComponent(JSON.stringify(usersWithBigIntAsString));
+    const downloadAnchorNode = document.createElement("a");
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "users.json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  };
+
   return (
     <section className="container mx-auto px-3  font-mono">
+      <div className="">
+        <button
+          onClick={handleBackupUsers}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Download JSON
+        </button>
+      </div>
       <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
         <div className="w-full overflow-x-auto">
           <table className="w-full">
@@ -52,13 +91,13 @@ const Admin = () => {
                     <div className=" items-center text-sm">
                       <div>
                         <p className="font-semibold text-black">
-                          {student.username}
+                          {student.firstName} {student.lastName}
                         </p>
                       </div>
                     </div>
                   </td>
                   <td className="px-4 py-3 text-ms border">
-                  <Tippy
+                    {/* <Tippy
                         hideOnClick={false}
                         content={
                           copied ? <span>copied</span> : <span>copy</span>
@@ -70,7 +109,7 @@ const Admin = () => {
                     >
                     <span> {truncateText(student.email)}</span> 
                     </CopyToClipboard>
-                    </Tippy>
+                    </Tippy> */}
                   </td>
                   <td className="px-4 py-3 text-xs border">
                     <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">

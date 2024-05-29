@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 const Profile = () => {
   const { backendActor, identity } = useAuth();
   const [student, setStudent] = useState<Student | null>(null);
-  const [username, setUsername] = useState<string>("");
+  const [firstName, setFirstname] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [institution, setInstitution] = useState<string>("");
   const [githubLink, setGithubLink] = useState<string>("");
@@ -22,10 +23,11 @@ const Profile = () => {
 
   const getUser = async () => {
     try {
-      const user = await backendActor.getUser(identity.getPrincipal());
+      const user = await backendActor.getMyProfile();
       if ("ok" in user) {
         setStudent(user.ok);
-        setUsername(user.ok.username);
+        setFirstname(user.ok.firstName);
+        setLastName(user.ok.lastName);
         setEmail(user.ok.email);
         setInstitution(user.ok.institution);
         setGithubLink(user.ok.github);
@@ -41,7 +43,8 @@ const Profile = () => {
       try {
         let user: Student = {
           ...student,
-          username: username,
+          firstName: firstName,
+          lastName: lastName,
           email: email,
           github: githubLink,
           institution: institution,
@@ -80,21 +83,41 @@ const Profile = () => {
             <div className="mb-4">
               <label
                 className="block text-gray-700  font-bold mb-2"
-                htmlFor="username"
+                htmlFor="firstName"
               >
-                Username
+                First Name
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
+                id="firstName"
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={firstName}
+                onChange={(e) => setFirstname(e.target.value)}
                 disabled={!edit}
                 placeholder="Username"
               />
-              {username.length < 1 && (
-                <span className="text-red-600">Username is required</span>
+              {firstName.length < 1 && (
+                <span className="text-red-600">First Name is required</span>
+              )}
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700  font-bold mb-2"
+                htmlFor="lastName"
+              >
+                Last Name
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="lastName"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                disabled={!edit}
+                placeholder="Last Name"
+              />
+              {lastName.length < 1 && (
+                <span className="text-red-600">Last Name is required</span>
               )}
             </div>
             <div className="mb-4">

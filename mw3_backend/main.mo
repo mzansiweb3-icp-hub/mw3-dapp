@@ -8,7 +8,6 @@ import Array "mo:base/Array";
 import Error "mo:base/Error";
 import AssocList "mo:base/AssocList";
 import List "mo:base/List";
-import Debug "mo:base/Debug";
 import Test "test";
 import Utils "utils";
 
@@ -132,7 +131,7 @@ shared ({ caller = initializer }) actor class MW3() = this {
       case (?student) {
         // Step 1: Add the new completed project to the student's completed projects (studentCompletedDaysHashMap)
         let completedHomeworks = student.submissions;
-        let username = student.username;
+        let email = student.email;
         let projectCompleted : Homework = {
           number = homework;
           canister = Principal.toText(canisterId);
